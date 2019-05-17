@@ -18,7 +18,7 @@ if ([System.IO.File]::Exists($InstallerPath))
 {
   Write-Host "Installer downloaded"
   Write-Host "Launching installer"
-  & "$Env:TEMP\ndp48-devpack-enu.exe" /q /norestart | Out-null
+  & "$InstallerPath" /q /norestart | Out-null
   
   Write-Host "Deleting installer"
   Remove-Item $InstallerPath

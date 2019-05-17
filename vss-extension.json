@@ -3,10 +3,10 @@
     "id": "ndp48installer-task",
     "name": ".NET Framework 4.8 Installer Task",
     "version": "1.0.0",
-    "publisher": "JoseG",
+    "publisher": "JGomezZ",
     "public": true,
     "icons": {
-        "default": "extension-icon.png"
+        "default": "logo_NETframework.png"
     },
     "targets": [
         {
