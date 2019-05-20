@@ -31,7 +31,7 @@ function Get-NetFrameworkRequired($version)
     "4.7"	    { $_req=460798; break; }
     "4.7.1"	    { $_req=461308; break; }
     "4.7.2"	    { $_req=461808; break; }
-    "4.8"	    { $_req=828040; break; }
+    "4.8"	    { $_req=628040; break; }
     default     { break }
   }
   $_req
@@ -70,15 +70,31 @@ function GetAndInstallPackage($packageId, $netver)
   if ([System.IO.File]::Exists($InstallerPath))
   {
     Write-Host "Installer downloaded"
-    Write-Host "Launching installer, please wait..."
+    Write-Host "Launching installer, it might take some time, please wait..."
+    $stopwatch =  [system.diagnostics.stopwatch]::StartNew()
     & "$InstallerPath" /q /norestart | Out-null
-# TODO: Check exitcode
-    Write-Host "Deleting installer"
+    $elapsed = $stopwatch.Elapsed.TotalSeconds
+    Write-Host "Installer ran for $elapsed seconds."
+    $stopwatch.Stop()
+    $_ok=$true
+    switch ($lastexitcode)
+    {
+        0       { Write-Host "Installation completed successfully."; break; }
+        1602    { Write-Host "The user canceled installation." -ForegroundColor red; $_ok=$false; break; }
+        1603    { Write-Host "A fatal error occurred during installation." -ForegroundColor red;  $_ok=$false; break; }
+        1641    { Write-Host "A restart is required to complete the installation.";
+                  Write-Host "This message indicates success.";     break; }
+        3010    { Write-Host "A restart is required to complete the installation.";
+                  Write-Host "This message indicates success.";     break; }
+        5100    { Write-Hosts "The user's computer does not meet system requirements." -ForegroundColor red;$_ok=$false; break; }
+        default {Write-Host "Error! Unknown error ($lastexitcode)" -ForegroundColor red; $_ok=$false; break; }
+    }
     Remove-Item $InstallerPath
+    return $_ok
   }
   else
   {
     Write-Host "Error! Cannot download .NET Framework installer" -ForegroundColor red
-    exit 1
+    return 1
   }
 }

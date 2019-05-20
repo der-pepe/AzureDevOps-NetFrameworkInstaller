@@ -28,12 +28,18 @@ if($NetFWInstalled -lt $NetFWRequired)
 {
   Write-Host ".NET Framework installation required"
   $Package=(Get-NetFrameworkPackage($netframework))
-  GetAndInstallPackage -packageId $Package -netver $netframework
+  $_res=(GetAndInstallPackage -packageId $Package -netver $netframework)
+  if ($_res)
+  {
+    Write-Host "Done." -ForegroundColor green
+    exit 0
+  } else {
+    Write-Host "Error." -ForegroundColor red
+    exit 1
+  }
 }
 else
 {
   Write-Host ".NET Framework v$netframework already installed"
+  exit 0
 }
-
-Write-Host "Done." -ForegroundColor green
-exit 0
