@@ -1,33 +1,39 @@
-<#
-  .NET Framework Installer for Azure DevOps pipeline
-#>
+# ==============================================================================
+#    .NET Installer Extension for Azure DevOps v0.4
+# ==============================================================================
 
-$InstallerPath="$Env:TEMP\ndp48-devpack-enu.exe"
+param (
+  [string]$netframework = "4.8",
+  [string]$netcore      = "",
+  [string]$arch         = "-64",
+  [switch]$force        = $false
+)
 
-Write-Host "=============================================================" -ForegroundColor green
-Write-Host " .NET Framework 4.8 Installer" -ForegroundColor green
-Write-Host "=============================================================" -ForegroundColor green
+$version="0.4"
+
+# includes
+."$PSScriptRoot\functions.ps1"
+
+Write-Host "==============================================================================" -ForegroundColor green
+Write-Host " .NET Installer Extension for Azure DevOps v$version" -ForegroundColor green
+Write-Host "==============================================================================" -ForegroundColor green
 Write-Host ""
 
-Write-Host "Downloading installer..."
-$progressPreference = 'silentlyContinue'
-Invoke-WebRequest -Uri "http://go.microsoft.com/fwlink/?linkid=2088517" -OutFile $InstallerPath
-$progressPreference = 'Continue'
+Write-Host "Installing .NET Framework v$netframework ..."
 
-if ([System.IO.File]::Exists($InstallerPath))
+$NetFWInstalled=(Get-NetFrameworkVersion)
+$NetFWRequired=(Get-NetFrameworkRequired($netframework))
+
+if($NetFWInstalled -lt $NetFWRequired)
 {
-  Write-Host "Installer downloaded"
-  Write-Host "Launching installer"
-  & "$InstallerPath" /q /norestart | Out-null
-  
-  Write-Host "Deleting installer"
-  Remove-Item $InstallerPath
-  Write-Host "Done!"
-  exit 0
+  Write-Host ".NET Framework installation required"
+  $Package=(Get-NetFrameworkPackage($netframework))
+  GetAndInstallPackage -packageId $Package -netver $netframework
 }
 else
 {
-  Write-Host "Error! Cannot download .NET Framework installer" -ForegroundColor red
-  exit 1
+  Write-Host ".NET Framework v$netframework already installed"
 }
 
+Write-Host "Done." -ForegroundColor green
+exit 0
