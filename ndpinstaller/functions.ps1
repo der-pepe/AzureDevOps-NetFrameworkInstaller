@@ -31,7 +31,7 @@ function Get-NetFrameworkRequired($version)
     "4.7"	    { $_req=460798; break; }
     "4.7.1"	    { $_req=461308; break; }
     "4.7.2"	    { $_req=461808; break; }
-    "4.8"	    { $_req=628040; break; }
+    "4.8"	    { $_req=528040; break; }
     default     { break }
   }
   $_req
