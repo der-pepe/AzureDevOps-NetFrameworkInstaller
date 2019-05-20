@@ -1,14 +1,19 @@
 {
+    "id": "bc5b84a6-e2c8-4a5a-bc53-31a79c0de68c",
     "name": "ndpinstaller",
     "friendlyName": "NdpInstaller",
     "description": "Run Ndp",
     "helpMarkDown": "Run NdpInstaller (.NET Framework 4.8 Installer)",
     "category": "Build",
-    "author": "JgomezZ",
+    "runsOn": [
+        "Agent",
+        "DeploymentGroup"
+    ],
+    "author": "JGomezZ",
     "version": {
         "Major": 1,
         "Minor": 0,
-        "Patch": 1
+        "Patch": 10
     },
     "links": {
         "home": {
@@ -28,10 +33,10 @@
     "minimumAgentVersion": "2.0.0",
     "instanceNameFormat": "NdpInstaller",
     "execution": {
-        "PowerShell": {
-            "target": "$(currentDirectory)\\ndpinstaller.ps1",
+        "PowerShell3": {
+            "target": "ndpinstaller.ps1",
             "argumentFormat": "",
-            "workingDirectory": "",
+            "workingDirectory": "$(currentDirectory)",
             "platforms": [
                 "windows"
             ]

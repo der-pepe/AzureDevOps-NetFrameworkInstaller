@@ -1,33 +1,38 @@
 {
     "manifestVersion": 1,
-    "id": "ndp48installer-task",
-    "name": ".NET Framework 4.8 Installer Task",
-    "version": "1.0.0",
+    "id": "ndpinstallerTask",
+    "version": "1.0.12",
+    "name": ".NET Framework 4.8 Installer",
+    "description": ".NET Framework 4.8 Installer for Azure DevOps.",
     "publisher": "JGomezZ",
     "public": true,
-    "icons": {
-        "default": "logo_NETframework.png"
-    },
     "targets": [
         {
             "id": "Microsoft.VisualStudio.Services"
         }
     ],
-    "description": "Task for Install .NET Framework 4.8.",
+    "icons": {
+        "default": "logo_NETframework.png"
+    },
+    "contributions": [
+        {
+            "id": "ndpinstallerTask",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "ndpinstaller"
+            }
+        }
+    ],
     "categories": [
-        "Build and release"
+        "Azure Pipelines"
     ],
     "repository": {
         "type": "git",
         "uri": "https://github.com/der-pepe/AzureDevOps-NetFrameworkInstaller"
     },
-    "badges": [
-        {
-            "href": "https://github.com/der-pepe/AzureDevOps-NetFrameworkInstaller",
-            "uri": "https://tomap.visualstudio.com/_apis/public/build/definitions/6d190468-0f5e-4624-9d49-8446c00b4b51/1/badge",
-            "description": "VSTS Build Status"
-        }
-    ],
     "content": {
         "details": {
             "path": "readme.md"
@@ -38,7 +43,7 @@
     },
     "files": [
         {
-            "path": "ndpinstaller"            
+            "path": "ndpinstaller"
         }
     ]
 }
