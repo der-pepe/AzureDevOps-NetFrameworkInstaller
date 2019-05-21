@@ -1,9 +1,9 @@
 {
     "id": "bc5b84a6-e2c8-4a5a-bc53-31a79c0de68c",
-    "name": "ndpinstaller",
-    "friendlyName": "NdpInstaller",
-    "description": "Run Ndp",
-    "helpMarkDown": "Run NdpInstaller (.NET Framework 4.8 Installer)",
+    "name": "netinstaller",
+    "friendlyName": ".NET Installer",
+    "description": "Run .NET Installer",
+    "helpMarkDown": "Run .NET Installer",
     "category": "Build",
     "runsOn": [
         "Agent",
@@ -31,7 +31,7 @@
         "uri": "https://github.com/der-pepe/AzureDevOps-NetFrameworkInstaller"
     },
     "minimumAgentVersion": "2.0.0",
-    "instanceNameFormat": "NdpInstaller",
+    "instanceNameFormat": "netinstaller",
     "execution": {
         "PowerShell3": {
             "target": "ndpinstaller.ps1",

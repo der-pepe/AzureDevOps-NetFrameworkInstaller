@@ -1,5 +1,5 @@
 # ==============================================================================
-#    .NET Installer Extension for Azure DevOps v0.4
+#    .NET Installer Extension for Azure DevOps v1.0
 # ==============================================================================
 
 param (
@@ -9,7 +9,7 @@ param (
   [switch]$force        = $false
 )
 
-$version="0.4"
+$version="1.0"
 
 # includes
 ."$PSScriptRoot\functions.ps1"
@@ -19,7 +19,7 @@ Write-Host " .NET Installer Extension for Azure DevOps v$version" -ForegroundCol
 Write-Host "==============================================================================" -ForegroundColor green
 Write-Host ""
 
-Write-Host "Installing .NET Framework v$netframework ..."
+Write-Host "Checking for .NET Framework v$netframework availability ..."
 
 $NetFWInstalled=(Get-NetFrameworkVersion)
 $NetFWRequired=(Get-NetFrameworkRequired($netframework))
@@ -28,6 +28,7 @@ if($NetFWInstalled -lt $NetFWRequired)
 {
   Write-Host ".NET Framework installation required"
   $Package=(Get-NetFrameworkPackage($netframework))
+  Write-Host "Installing .NET Framework v$netframework ..."
   $_res=(GetAndInstallPackage -packageId $Package -netver $netframework)
   if ($_res)
   {

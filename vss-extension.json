@@ -1,7 +1,7 @@
 {
     "manifestVersion": 1,
     "id": "ndpinstallerTask",
-    "version": "1.0.12",
+    "version": "1.0.14",
     "name": ".NET Framework 4.8 Installer",
     "description": ".NET Framework 4.8 Installer for Azure DevOps.",
     "publisher": "JGomezZ",
